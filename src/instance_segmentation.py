@@ -118,5 +118,42 @@ def main():
                 pbar.update()
 
 
+class SlyModel(sly.nn.Serve):
+    def __init__(self, model_dir: str, device="cpu", score_thresh=0.5):
+        super().__init__(dir)
+
+        weights_path = os.path.join(model_dir, "model_weights.pkl")
+
+        # Initialize Detectron2 model from config
+        # learn more in detectron2 example (inference section) https://colab.research.google.com/drive/16jcaJoc6bCFAQ96jDe2HwtXj7BMD_-m5
+        cfg = get_cfg()
+        cfg.merge_from_file(
+            model_zoo.get_config_file(
+                "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
+            )
+        )
+        cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = score_thresh
+        cfg.MODEL.DEVICE = device
+        cfg.MODEL.WEIGHTS = weights_path
+
+        self.predictor = DefaultPredictor(cfg)
+        self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get(
+            "thing_classes"
+        )
+
+
+# @TODO: path in env variable
+# @TODO: custom configs?
+# @TODO: lazy config / new baselines?
+# @TODO: Serve->Inference??
+
 if __name__ == "__main__":
-    main()
+    if sly.is_development():
+        # for local development and debugging
+        model_dir = os.path.join(os.getcwd(), "my_model")
+        m = SlyModel(model_dir)
+    elif sly.is_production():
+        # code below is running on Supervisely platform in production
+        m = SlyModel()
+
+    # main()
