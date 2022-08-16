@@ -17,12 +17,14 @@ echo "Install requirements..." && \
 pip3 install -r requirements.txt && \
 
 arch=$(uname -m)
+ARCHFLAGS="-arch x86_64" 
 if [[ $arch == arm* ]]; then
   echo "------> Running on MAC ..."
-  CC=clang CXX=clang++ ARCHFLAGS="-arch arm64e" pip3 install git+https://github.com/facebookresearch/detectron2.git
-else
-  CC=clang CXX=clang++ ARCHFLAGS="-arch x86_64" pip3 install git+https://github.com/facebookresearch/detectron2.git
+  ARCHFLAGS="-arch arm64e"
 fi
+
+CC=clang CXX=clang++ ARCHFLAGS=$ARCHFLAGS python3 -m pip install git+https://github.com/facebookresearch/detectron2.git
+ARCHFLAGS=$ARCHFLAGS python3 -m pip install -U pycocotools
 echo "Requirements have been successfully installed" && \
 
 echo "Testing imports, please wait a minute ..." && \
