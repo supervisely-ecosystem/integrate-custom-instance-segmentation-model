@@ -4,7 +4,7 @@
 # Official python docs: https://docs.python.org/3/library/venv.html
 # Superviely developer portal: https://developer.supervise.ly/getting-started/installation#venv
 
-if [ -d "venv" ]; then
+if [ -d ".venv" ]; then
     echo "VENV already exists, will be removed"
     rm -rf .venv
 fi
@@ -15,5 +15,18 @@ source .venv/bin/activate && \
 
 echo "Install requirements..." && \
 pip3 install -r requirements.txt && \
+
+arch=$(uname -m)
+if [[ $arch == arm* ]]; then
+  echo "------> Running on MAC ..."
+  CC=clang CXX=clang++ ARCHFLAGS="-arch arm64e" pip3 install git+https://github.com/facebookresearch/detectron2.git
+else
+  CC=clang CXX=clang++ ARCHFLAGS="-arch x86_64" pip3 install git+https://github.com/facebookresearch/detectron2.git
+fi
 echo "Requirements have been successfully installed" && \
+
+echo "Testing imports, please wait a minute ..." && \
+python -c "import supervisely as sly" && \
+echo "Success!" && \
+
 deactivate
