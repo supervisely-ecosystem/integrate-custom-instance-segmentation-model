@@ -7,9 +7,8 @@ import supervisely as sly
 
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
-from detectron2.config import get_cfg
+from detectron2.config import get_cfg, LazyConfig
 from detectron2.data import MetadataCatalog
-
 
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
