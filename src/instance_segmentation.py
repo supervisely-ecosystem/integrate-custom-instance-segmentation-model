@@ -43,9 +43,10 @@ def load_model():
     )
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
     cfg.MODEL.DEVICE = "cpu"
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url(
-        "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
-    )
+    my_weights = os.path.join(os.getcwd(), "my_model/model_final_f10217.pkl")
+    cfg.MODEL.WEIGHTS = my_weights
+
+    # model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
     predictor = DefaultPredictor(cfg)
     class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get("thing_classes")
     return predictor, class_names
