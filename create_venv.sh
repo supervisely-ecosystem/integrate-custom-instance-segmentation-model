@@ -24,7 +24,11 @@ if [[ $arch == arm* ]]; then
 fi
 
 CC=clang CXX=clang++ ARCHFLAGS=$ARCHFLAGS python3 -m pip install git+https://github.com/facebookresearch/detectron2.git
-ARCHFLAGS=$ARCHFLAGS python3 -m pip install -U pycocotools
+
+# pycocotools via the github repo instead of pypi for better compatibility 
+pip install "git+https://github.com/open-mmlab/cocoapi.git#subdirectory=pycocotools"
+# ARCHFLAGS=$ARCHFLAGS python3 -m pip install -U pycocotools
+
 echo "Requirements have been successfully installed" && \
 
 echo "Testing imports, please wait a minute ..." && \
