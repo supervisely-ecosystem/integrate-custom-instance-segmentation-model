@@ -2,3 +2,4 @@
 .DS_Store
 supervisely
 *.pkl
+demo_data/image_01_prediction.jpg
