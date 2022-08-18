@@ -26,7 +26,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
                 "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
             )
         )
-        cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
+        # cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
         cfg.MODEL.DEVICE = "cpu"
         cfg.MODEL.WEIGHTS = os.path.join(model_dir, "model_weights.pkl")
 
@@ -39,7 +39,9 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
     def get_classes(self) -> list[str]:
         return self.class_names  # ["cat", "dog", ...]
 
-    def predict(self, image_path: str) -> list[sly.nn.PredictionMask]:
+    def predict(
+        self, image_path: str, confidence_threshold: float = 0.8
+    ) -> list[sly.nn.PredictionMask]:
         image = cv2.imread(image_path)  # BGR
 
         # get predictions from Detectron2 model
@@ -51,6 +53,8 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
 
         results = []
         for score, class_name, mask in zip(pred_scores, pred_class_names, pred_masks):
+            if score < confidence_threshold:
+                continue
             results.append(sly.nn.PredictionMask(class_name, mask, score))
         return results
 
