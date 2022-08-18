@@ -36,12 +36,12 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         )
 
     def get_classes(self) -> list[str]:
-        return self.class_names
+        return self.class_names  # ["cat", "dog", ...]
 
     def predict(self, image_path: str) -> list[sly.nn.PredictionMask]:
         image = cv2.imread(image_path)  # BGR
 
-        # Get predictions from Detectron2 model
+        # get predictions from Detectron2 model
         outputs = self.predictor(image)
         pred_classes = outputs["instances"].pred_classes.detach().numpy()
         pred_class_names = [self.class_names[pred_class] for pred_class in pred_classes]
