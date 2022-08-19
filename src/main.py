@@ -68,6 +68,7 @@ else:
     # api.app.get_info_by_id(id=current_app.id).config.get('modalTemplateState', {})
 
     api = sly.Api()
+    # TODO: create network configuration in ~/supervisely-network
     # TODO: get app module id by name? - rename in UI
     # TODO: get app id by name
     # TODO: run app on agent that do not runinng
