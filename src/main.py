@@ -64,57 +64,13 @@ if sly.is_production():
     m = MyModel()
     m.serve()
 else:
-    print(123)
-    import shlex
-    import subprocess
-    from subprocess import PIPE
-    import pathlib
-
-    current_dir = pathlib.Path(__file__).parent.absolute()
-    sh_path = os.path.join(current_dir, "sly-net.sh")
-    client_token = "max-macbook"
-    server_address = os.environ["SERVER_ADDRESS"]
-
-    # "./sly-net.sh <up|down> <token> <server_address> <config and keys folder>"
-    # ./src/sly-net.sh down "max-macbook" https://dev.supervise.ly .
-    # ./src/sly-net.sh up "max-macbook" https://dev.supervise.ly .
-
-    # session = subprocess.Popen(
-    #     shlex.split(f"{sh_path} up {client_token} {server_address} ."),
-    #     stdout=PIPE,
-    #     stderr=PIPE,
-    # )
-    # stdout, stderr = session.communicate()
-    # # if len(stderr) != 0:
-    # # raise RuntimeError(stderr.decode("utf-8"))
-    # output = stdout.decode("utf-8")
-    # print(output)
-
-    import shlex
-    import subprocess
-
-    process = subprocess.run(
-        shlex.split(f"./src/sly-net.sh up max-macbook https://dev.supervise.ly ."),
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        universal_newlines=True,
-    )
-    try:
-        process.check_returncode()
-    except subprocess.CalledProcessError as e:
-        print(repr(e))
-
-    x = 10
-    # # for local development and debugging
-    # model_dir = os.path.join(os.getcwd(), "my_model")
-    # m = MyModel(model_dir)
-
-    # # debug with inference interfaces
-    # m.serve()
+    # for local development and debugging
+    model_dir = os.path.join(os.getcwd(), "my_model")
+    m = MyModel(model_dir)
 
     # debug local image
-    # image_path = os.path.join(os.getcwd(), "demo_data/image_01.jpg")
-    # results = m.predict(image_path)
-    # vis_path = os.path.join(os.getcwd(), "demo_data/image_01_prediction.jpg")
-    # m.visualize(results, image_path, vis_path)
-    # print("predictions and visualization have been created")
+    image_path = os.path.join(os.getcwd(), "demo_data/image_01.jpg")
+    results = m.predict(image_path)
+    vis_path = os.path.join(os.getcwd(), "demo_data/image_01_prediction.jpg")
+    m.visualize(results, image_path, vis_path)
+    print("predictions and visualization have been created")
