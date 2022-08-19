@@ -64,6 +64,36 @@ if sly.is_production():
     m = MyModel()
     m.serve()
 else:
+
+    # api.app.get_info_by_id(id=current_app.id).config.get('modalTemplateState', {})
+
+    api = sly.Api()
+    # TODO: get app module id by name? - rename in UI
+    # TODO: get app id by name
+    # TODO: run app on agent that do not runinng
+    # ui app id -> app module
+    # how to get app id that do not installed in team?
+    # how to run on fake agent?
+    # api.task.start - add redirect_requests argument
+    # tasks.run.app - can i use moduleId? get module info by name?
+    # tasks.run.app - team_id? instead of workspace_id???
+    # redirect_requests = {"token": "<API TOKEN>", "port": 8000}
+
+    # sly-net.sh up
+    # run while-true app with redirect_requests -> task_id (check existance) - try fake task run on fake hidden agent??
+    # debugging
+    # sly-net.sh down
+    # kill while-true app? - txt file in SDK? .debug-app.pid (hidden)
+
+    # task_info = api.task.get_info_by_id(19789)
+    # app_info = api.app.get_info_by_id(6609)
+
+    task_info = api.task.start(
+        agent_id=17, app_id=6609, workspace_id=619, task_name="test vpn"
+    )
+    api.task.wait(19791, target_status=api.task.Status.FINISHED)
+    x = 10
+
     # for local development and debugging
     model_dir = os.path.join(os.getcwd(), "my_model")
     m = MyModel(model_dir)
