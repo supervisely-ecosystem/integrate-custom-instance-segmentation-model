@@ -64,8 +64,11 @@ if sly.is_production():
     m = MyModel()
     m.serve()
 else:
-    app = sly.Application()
-    app.connect_to_supervisely_vpn_network()
+    api = sly.Api()
+    me = api.user.get_my_info()
+    print(me)
+    sly.app.development.connect_to_supervisely_vpn_network()
+    sly.app.development.create_development_task()
 
     # user_name = users.me
     # session_name = <user_name>+development
