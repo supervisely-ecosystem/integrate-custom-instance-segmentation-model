@@ -64,10 +64,16 @@ if sly.is_production():
     m = MyModel()
     m.serve()
 else:
+    app = sly.Application()
+    app.connect_to_supervisely_vpn_network()
 
     # api.app.get_info_by_id(id=current_app.id).config.get('modalTemplateState', {})
 
     api = sly.Api()
+    # correct launch command
+    # wg-quick must be run as root. Please enter the password for max to continue:
+    # Interface for wg0 is utun7\nwg-quick: `wg0' already exists as `utun7'\n"
+    # TODO: create HeadlessApplication class
     # TODO: create network configuration in ~/supervisely-network
     # TODO: get app module id by name? - rename in UI
     # TODO: get app id by name
