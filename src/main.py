@@ -67,14 +67,24 @@ else:
     app = sly.Application()
     app.connect_to_supervisely_vpn_network()
 
+    # user_name = users.me
+    # session_name = <user_name>+development
+    # ecosystem.list filter=(slug=="supervisely-ecosystem/while-true-script-v2") -> module_id
+    # check app task exists
+    # apps.list (team_id, filter=[module_id], onlyRunning=True) ->  [apps info with field tasks info list for every app]
+    # check session name in tasks info.meta.name
+
+    # if app task exists - false
+    # api.task.start(module_id=777) (one of app_id or module_id)
+
+    team_id = int(os.environ["context.teamId"])
+
     # api.app.get_info_by_id(id=current_app.id).config.get('modalTemplateState', {})
 
     api = sly.Api()
     # correct launch command
     # wg-quick must be run as root. Please enter the password for max to continue:
-    # Interface for wg0 is utun7\nwg-quick: `wg0' already exists as `utun7'\n"
     # TODO: create HeadlessApplication class
-    # TODO: create network configuration in ~/supervisely-network
     # TODO: get app module id by name? - rename in UI
     # TODO: get app id by name
     # TODO: run app on agent that do not runinng
