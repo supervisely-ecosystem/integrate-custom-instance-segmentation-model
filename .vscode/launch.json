@@ -5,7 +5,8 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            // "program": "${file}",
+            "program": "${workspaceFolder}/src/main.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {

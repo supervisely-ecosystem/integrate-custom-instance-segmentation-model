@@ -68,6 +68,7 @@ else:
     team_id = int(os.environ["context.teamId"])
     sly.app.development.create_debug_task(team_id)
     sly.app.development.connect_to_supervisely_vpn_network()
+    exit(0)
 
     # user_name = users.me
     # session_name = <user_name>+development
@@ -84,7 +85,6 @@ else:
     # api.app.get_info_by_id(id=current_app.id).config.get('modalTemplateState', {})
 
     api = sly.Api()
-    # correct launch command to run only main py (in development mode - simple case)
     # wg-quick must be run as root. Please enter the password for max to continue:
     # TODO: create HeadlessApplication class
     # TODO: get app module id by name? - rename in UI
