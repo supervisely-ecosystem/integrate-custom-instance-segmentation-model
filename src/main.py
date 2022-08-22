@@ -70,12 +70,11 @@ else:
     # exit(0)
 
     # for local development and debugging
-    model_dir = os.path.join(os.getcwd(), "my_model")
+    model_dir = "./my_model"
     m = MyModel(model_dir)
 
-    # debug local image
-    image_path = os.path.join(os.getcwd(), "demo_data/image_01.jpg")
+    image_path = "./demo_data/image_01.jpg"
     results = m.predict(image_path)
-    vis_path = os.path.join(os.getcwd(), "demo_data/image_01_prediction.jpg")
+    vis_path = "./demo_data/image_01_prediction.jpg"
     m.visualize(results, image_path, vis_path)
     print("predictions and visualization have been created")
