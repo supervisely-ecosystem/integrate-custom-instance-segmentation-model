@@ -66,12 +66,9 @@ else:
     # advanced debug for Supervisely Team
     team_id = int(os.environ["context.teamId"])
     model_dir = os.environ["context.slyFolder"]
-
-    # sly.app.development.supervisely_vpn_network(action="down")
     sly.app.development.supervisely_vpn_network(action="up")
     task = sly.app.development.create_debug_task(team_id, port="8000")
 
-    # @TODO: state.from_request - disable replace global
     m = MyModel(model_dir)
     m.serve()
 
