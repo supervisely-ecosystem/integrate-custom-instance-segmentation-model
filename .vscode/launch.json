@@ -2,12 +2,33 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
+            "name": "Debug on image",
             "type": "python",
             "request": "launch",
             // "program": "${file}",
             "program": "${workspaceFolder}/src/main.py",
             "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",
+                "LOG_LEVEL": "DEBUG",
+            }
+        },
+        {
+            "name": "Supervisely developer",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "src.main:m.app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000",
+                "--ws",
+                "websockets"
+            ],
+            "jinja": true,
             "justMyCode": true,
             "env": {
                 "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",

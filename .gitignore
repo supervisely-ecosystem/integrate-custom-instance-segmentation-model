@@ -3,3 +3,4 @@
 supervisely
 *.pkl
 demo_data/image_01_prediction.jpg
+__pycache__

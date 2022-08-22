@@ -34,7 +34,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get(
             "thing_classes"
         )
-        print("model has been successfully deployed")
+        print("Model has been successfully deployed")
 
     def get_classes(self) -> list[str]:
         return self.class_names  # ["cat", "dog", ...]
@@ -63,18 +63,24 @@ if sly.is_production():
     m = MyModel()
     m.serve()
 else:
-    # # advanced debug for Supervisely Team
-    # team_id = int(os.environ["context.teamId"])
-    # sly.app.development.connect_to_supervisely_vpn_network()
-    # sly.app.development.create_debug_task(team_id, port="8000")
-    # exit(0)
+    # advanced debug for Supervisely Team
+    team_id = int(os.environ["context.teamId"])
+    model_dir = os.environ["context.slyFolder"]
 
-    # for local development and debugging
-    model_dir = "./my_model"
+    # sly.app.development.supervisely_vpn_network(action="down")
+    sly.app.development.supervisely_vpn_network(action="up")
+    task = sly.app.development.create_debug_task(team_id, port="8000")
+
+    # @TODO: state.from_request - disable replace global
     m = MyModel(model_dir)
+    m.serve()
 
-    image_path = "./demo_data/image_01.jpg"
-    results = m.predict(image_path)
-    vis_path = "./demo_data/image_01_prediction.jpg"
-    m.visualize(results, image_path, vis_path)
-    print("predictions and visualization have been created")
+    # # for local development and debugging
+    # model_dir = "./my_model"
+    # m = MyModel(model_dir)
+
+    # image_path = "./demo_data/image_01.jpg"
+    # results = m.predict(image_path)
+    # vis_path = "./demo_data/image_01_prediction.jpg"
+    # m.visualize(results, image_path, vis_path)
+    # print("predictions and visualization have been created")
