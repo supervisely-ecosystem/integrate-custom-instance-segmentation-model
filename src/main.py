@@ -66,8 +66,8 @@ if sly.is_production():
 else:
     api = sly.Api()
     team_id = int(os.environ["context.teamId"])
-    sly.app.development.create_debug_task(team_id)
     sly.app.development.connect_to_supervisely_vpn_network()
+    sly.app.development.create_debug_task(team_id, port="8000")
     exit(0)
 
     # user_name = users.me
