@@ -53,9 +53,8 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
 
         results = []
         for score, class_name, mask in zip(pred_scores, pred_class_names, pred_masks):
-            if score < confidence_threshold:
-                continue
-            results.append(sly.nn.PredictionMask(class_name, mask, score))
+            if score >= confidence_threshold:
+                results.append(sly.nn.PredictionMask(class_name, mask, score))
         return results
 
 
