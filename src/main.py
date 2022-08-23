@@ -35,7 +35,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get(
             "thing_classes"
         )
-        print("Model has been successfully deployed")
+        print("Model has been successfully loaded on device")
 
     def get_classes(self) -> list[str]:
         return self.class_names  # ["cat", "dog", ...]
@@ -67,6 +67,7 @@ m = MyModel(model_dir)
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
+    # just ignore it during development and testing
     m.serve()
 else:
     # for local development and debugging
