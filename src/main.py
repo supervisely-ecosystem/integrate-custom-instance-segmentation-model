@@ -71,7 +71,8 @@ if sly.is_production():
 else:
     # for local development and debugging
     image_path = "./demo_data/image_01.jpg"
-    results = m.predict(image_path)
+    confidence_threshold = 0.7
+    results = m.predict(image_path, confidence_threshold)
     vis_path = "./demo_data/image_01_prediction.jpg"
     m.visualize(results, image_path, vis_path)
     print("predictions and visualization have been created")
