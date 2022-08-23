@@ -13,6 +13,7 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 # code for detectron2 inference copied from official COLAB tutorial (inference section):
 # https://colab.research.google.com/drive/16jcaJoc6bCFAQ96jDe2HwtXj7BMD_-m5
+# https://detectron2.readthedocs.io/en/latest/tutorials/getting_started.html
 
 
 class MyModel(sly.nn.inference.InstanceSegmentation):
@@ -58,26 +59,19 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         return results
 
 
+team_id = int(os.environ["context.teamId"])
+model_dir = os.environ["context.slyFolder"]
+# TODO: get GPU device
+
+m = MyModel(model_dir)
+
 if sly.is_production():
     # code below is running on Supervisely platform in production
-    m = MyModel()
     m.serve()
 else:
-    # advanced debug for Supervisely Team
-    team_id = int(os.environ["context.teamId"])
-    model_dir = os.environ["context.slyFolder"]
-    sly.app.development.supervisely_vpn_network(action="up")
-    task = sly.app.development.create_debug_task(team_id, port="8000")
-
-    m = MyModel(model_dir)
-    m.serve()
-
-    # # for local development and debugging
-    # model_dir = "./my_model"
-    # m = MyModel(model_dir)
-
-    # image_path = "./demo_data/image_01.jpg"
-    # results = m.predict(image_path)
-    # vis_path = "./demo_data/image_01_prediction.jpg"
-    # m.visualize(results, image_path, vis_path)
-    # print("predictions and visualization have been created")
+    # for local development and debugging
+    image_path = "./demo_data/image_01.jpg"
+    results = m.predict(image_path)
+    vis_path = "./demo_data/image_01_prediction.jpg"
+    m.visualize(results, image_path, vis_path)
+    print("predictions and visualization have been created")

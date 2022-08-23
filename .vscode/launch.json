@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug on image",
+            "name": "Basic debug",
             "type": "python",
             "request": "launch",
             // "program": "${file}",
@@ -15,7 +15,7 @@
             }
         },
         {
-            "name": "Supervisely developer",
+            "name": "Advanced mode for Supervisely Team",
             "type": "python",
             "request": "launch",
             "module": "uvicorn",
@@ -33,6 +33,8 @@
             "env": {
                 "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",
                 "LOG_LEVEL": "DEBUG",
+                "ENV": "production",
+                "DEBUG_WITH_SLY_NET": "1"
             }
         }
     ]
