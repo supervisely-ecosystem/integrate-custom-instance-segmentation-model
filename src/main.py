@@ -20,14 +20,14 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
     def __init__(self, model_dir: str = None):
         super().__init__(model_dir)
 
-        # Initialize Detectron2 model from config
+        ####### CODE FOR DETECTRON2 MODEL STARTS #######
         cfg = get_cfg()
         cfg.merge_from_file(
+            # Initialize Detectron2 model from config
             model_zoo.get_config_file(
                 "COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"
             )
         )
-        # cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
         cfg.MODEL.DEVICE = "cpu"
         cfg.MODEL.WEIGHTS = os.path.join(model_dir, "model_weights.pkl")
 
@@ -35,6 +35,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get(
             "thing_classes"
         )
+        ####### CODE FOR DETECTRON2 MODEL ENDS #########
         print("Model has been successfully loaded on device")
 
     def get_classes(self) -> list[str]:
@@ -45,12 +46,13 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
     ) -> list[sly.nn.PredictionMask]:
         image = cv2.imread(image_path)  # BGR
 
-        # get predictions from Detectron2 model
-        outputs = self.predictor(image)
+        ####### CODE FOR DETECTRON2 MODEL STARTS #######
+        outputs = self.predictor(image)  # get predictions from Detectron2 model
         pred_classes = outputs["instances"].pred_classes.detach().numpy()
         pred_class_names = [self.class_names[pred_class] for pred_class in pred_classes]
         pred_scores = outputs["instances"].scores.detach().numpy().tolist()
         pred_masks = outputs["instances"].pred_masks.detach().numpy()
+        ####### CODE FOR DETECTRON2 MODEL ENDS #########
 
         results = []
         for score, class_name, mask in zip(pred_scores, pred_class_names, pred_masks):
