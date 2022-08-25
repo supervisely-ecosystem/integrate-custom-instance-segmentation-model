@@ -1,10 +1,5 @@
-supervisely==6.56.9
+supervisely==6.59.0
 black # for code formatting
-pyyaml==6.0
 torch 
 torchvision 
 torchaudio
-# git+https://github.com/facebookresearch/detectron2.git
-
-
-# https://medium.com/@hakon.hukkelas/installing-detectron2-natively-for-mac-m1-pro-apple-silicon-a89517f1c913
