@@ -74,7 +74,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
 
 
 team_id = int(os.environ["context.teamId"])
-model_dir = os.environ["context.slyFolder"]
+model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = os.environ.get("modal.state.device", "cpu")
 
 m = MyModel(model_dir, device)
