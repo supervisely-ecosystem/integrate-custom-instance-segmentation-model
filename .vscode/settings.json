@@ -13,15 +13,6 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  // "[jinja]": {
-  //   "editor.defaultFormatter": "monosans.djlint"
-  // },
-  // "[jinja-html]": {
-  //   "editor.defaultFormatter": "monosans.djlint"
-  // },
-  "emmet.includeLanguages": {
-    "jinja-html": "html"
-  },
   "python.formatting.provider": "black",
   "debug.inlineValues": "off",
 }

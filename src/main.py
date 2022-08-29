@@ -78,9 +78,9 @@ model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = os.environ.get("modal.state.device", "cpu")
 
 m = MyModel(model_dir, device)
-from supervisely.app.content import StateJson
 
-StateJson()["isCollapse"] = False
+# TODO: jinja2.exceptions.TemplateNotFound: main.html
+sidebar = sly.app.widgets.Sidebar()
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
