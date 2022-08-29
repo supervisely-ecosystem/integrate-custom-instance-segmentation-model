@@ -29,7 +29,7 @@
                 "websockets"
             ],
             "jinja": true,
-            "justMyCode": true,
+            // "justMyCode": true,
             "env": {
                 "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",
                 "LOG_LEVEL": "DEBUG",
