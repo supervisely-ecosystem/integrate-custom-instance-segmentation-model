@@ -73,8 +73,23 @@ model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = os.environ.get("modal.state.device", "cpu")  # @TODO: reimplement
 
 m = MyModel(model_dir, device)
-sidebar = sly.app.widgets.Sidebar()
-text = sly.app.widgets.Text("tttt", "success")
+# sidebar = sly.app.widgets.Sidebar()
+
+# text1 = sly.app.widgets.Text("t1", "success")
+# text2 = sly.app.widgets.Text("t2", "error")
+# container = sly.app.widgets.Container(widgets=[text1, text2])
+card1 = sly.app.widgets.Card(title="My title1", description="My descriotion")
+card2 = sly.app.widgets.Card(
+    title="My title2", description="My descriotion", collapsable=True
+)
+card3 = sly.app.widgets.Card(
+    title="My title2", description="My descriotion", collapsable=True
+)
+
+# @TODO: widget - _sly_app
+# @TODO: sidebar white background color (left part)
+# @TODO: sly-card - remove automatic margin-bottom with special key for backward compatibility
+# @TODO: sly-card - remove outer margins
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
@@ -88,150 +103,3 @@ else:
     vis_path = "./demo_data/image_01_prediction.jpg"
     m.visualize(results, image_path, vis_path)
     print("predictions and visualization have been created")
-
-
-# <sly-sidebar :sidebarWidth="10">
-#   <div slot="sidebar">
-#     <div>Sidebar content</div>
-#     <div>Section 1</div>
-#     <div>Menu 1</div>
-#     <div>Menu 2</div>
-#     <div>Section 2</div>
-#     <div>Menu 1</div>
-#     <div>Menu 2</div>
-#     <el-menu
-#       default-active="2"
-#       class="el-menu-vertical-demo"
-#       :collapse="state.isCollapse"
-#     >
-#       <el-submenu index="1">
-#         <template slot="title">
-#           <i class="el-icon-message"></i>
-#           <span slot="title">Navigator One</span>
-#         </template>
-#         <el-menu-item-group>
-#           <span slot="title">Group One</span>
-#           <el-menu-item index="1-1">item one</el-menu-item>
-#           <el-menu-item index="1-2">item two</el-menu-item>
-#         </el-menu-item-group>
-#         <el-menu-item-group title="Group Two">
-#           <el-menu-item index="1-3">item three</el-menu-item>
-#         </el-menu-item-group>
-#         <el-submenu index="1-4">
-#           <span slot="title">item four</span>
-#           <el-menu-item index="1-4-1">item one</el-menu-item>
-#         </el-submenu>
-#       </el-submenu>
-#       <el-menu-item index="2">
-#         <i class="el-icon-menu"></i>
-#         <span slot="title">Navigator Two</span>
-#       </el-menu-item>
-#       <el-menu-item index="3">
-#         <i class="el-icon-setting"></i>
-#         <span slot="title">Navigator Three</span>
-#       </el-menu-item>
-#     </el-menu>
-#   </div>
-
-#   <div>
-#     <el-radio-group v-model="state.isCollapse" style="margin-bottom: 20px">
-#       <el-radio-button :label="false">expand</el-radio-button>
-#       <el-radio-button :label="true">collapse</el-radio-button>
-#     </el-radio-group>
-
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-#   <div>
-#     <sly-card title="Card" subtitle="Card description">
-#       <div>Some content here</div>
-#     </sly-card>
-#     <div>123</div>
-#   </div>
-# </sly-sidebar>
