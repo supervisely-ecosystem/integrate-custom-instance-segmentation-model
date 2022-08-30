@@ -89,8 +89,6 @@ main_pane = sly.app.widgets.Container(widgets=cards, direction="vertical", gap=1
 
 sidebar = sly.app.widgets.Sidebar(left_pane=text1, right_pane=main_pane)
 
-# @TODO: widget without name
-# @TODO: widget - _sly_app
 # @TODO: sidebar white background color (left part)
 # @TODO: sly-card - remove automatic margin-bottom with special key for backward compatibility
 # @TODO: sly-card - remove outer margins
