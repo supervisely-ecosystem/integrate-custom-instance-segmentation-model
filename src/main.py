@@ -78,15 +78,12 @@ model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = os.environ.get("modal.state.device", "cpu")
 
 m = MyModel(model_dir, device)
-
-# TODO: move self.context_widgets from templates and add them to separate singleton
-# sidebar = sly.app.widgets.Sidebar()
-
+sidebar = sly.app.widgets.Sidebar()
+text = sly.app.widgets.Text("tttt", "success")
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
     # just ignore it during development and testing
-    text = sly.app.widgets.Text("tttt", "success")
     m.serve()
 else:
     # for local development and debugging
