@@ -26,7 +26,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         device: Literal["cpu", "cuda", "cuda:0", "cuda:1", "cuda:2", "cuda:3"] = "cpu",
     ):
         super().__init__(model_dir, device)
-
+        return
         ####### CODE FOR DETECTRON2 MODEL STARTS #######
         with open(os.path.join(model_dir, "model_info.json"), "r") as myfile:
             model_info = json.loads(myfile.read())
@@ -51,6 +51,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
     def predict(
         self, image_path: str, confidence_threshold: float = 0.8
     ) -> list[sly.nn.PredictionMask]:
+        return []
         image = cv2.imread(image_path)  # BGR
 
         ####### CODE FOR DETECTRON2 MODEL STARTS #######
@@ -73,23 +74,28 @@ model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = os.environ.get("modal.state.device", "cpu")  # @TODO: reimplement
 
 m = MyModel(model_dir, device)
-# sidebar = sly.app.widgets.Sidebar()
 
-# text1 = sly.app.widgets.Text("t1", "success")
+text1 = sly.app.widgets.Text("t1", "success")
 # text2 = sly.app.widgets.Text("t2", "error")
-# container = sly.app.widgets.Container(widgets=[text1, text2])
-card1 = sly.app.widgets.Card(title="My title1", description="My descriotion")
-card2 = sly.app.widgets.Card(
-    title="My title2", description="My descriotion", collapsable=True
-)
-card3 = sly.app.widgets.Card(
-    title="My title2", description="My descriotion", collapsable=True
-)
 
+cards = []
+for i in range(30):
+    cards.append(
+        sly.app.widgets.Card(title="My title1", description="My description"),
+    )
+
+# main_pane = sly.app.widgets.Container(widgets=cards, direction="horizontal", gap=10)
+main_pane = sly.app.widgets.Container(widgets=cards, direction="vertical", gap=10)
+
+sidebar = sly.app.widgets.Sidebar(left_pane=text1, right_pane=main_pane)
+
+# @TODO: widget without name
 # @TODO: widget - _sly_app
 # @TODO: sidebar white background color (left part)
 # @TODO: sly-card - remove automatic margin-bottom with special key for backward compatibility
 # @TODO: sly-card - remove outer margins
+# @TODO: bundle - change only versions, not latest
+# @TODO: right scrol + change sidebar, horizontal scroll - disable??
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
