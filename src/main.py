@@ -1,5 +1,6 @@
+from distutils.log import warn
 import os
-from typing import Literal
+from typing import Literal, List
 import cv2
 import json
 from dotenv import load_dotenv
@@ -10,6 +11,8 @@ from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2.data import MetadataCatalog
+
+from supervisely.app.widgets import card
 
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
@@ -75,25 +78,19 @@ device = os.environ.get("modal.state.device", "cpu")  # @TODO: reimplement
 
 m = MyModel(model_dir, device)
 
-text1 = sly.app.widgets.Text("t1", "success")
-# text2 = sly.app.widgets.Text("t2", "error")
+text1 = sly.app.widgets.Text("text text text", "success")
 
-cards = []
+cards: List[sly.app.widgets.Card] = []
 for i in range(30):
-    cards.append(
-        sly.app.widgets.Card(title="My title1", description="My description"),
-    )
+    cards.append(sly.app.widgets.Card(title="My title1", description="My description"))
+
 
 # main_pane = sly.app.widgets.Container(widgets=cards, direction="horizontal", gap=10)
 main_pane = sly.app.widgets.Container(widgets=cards, direction="vertical", gap=10)
-
 sidebar = sly.app.widgets.Sidebar(left_pane=text1, right_pane=main_pane)
 
 # @TODO: MenuSidebar with navigation pane
-# @TODO: sidebar white background color (left part)
-# @TODO: sly-card - remove automatic margin-bottom with special key for backward compatibility
-# @TODO: sly-card - remove outer margins
-# @TODO: bundle - change only versions, not latest
+
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
