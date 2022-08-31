@@ -94,7 +94,6 @@ sidebar = sly.app.widgets.Sidebar(left_pane=text1, right_pane=main_pane)
 # @TODO: sly-card - remove automatic margin-bottom with special key for backward compatibility
 # @TODO: sly-card - remove outer margins
 # @TODO: bundle - change only versions, not latest
-# @TODO: right scrol + change sidebar, horizontal scroll - disable??
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
