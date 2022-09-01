@@ -23,13 +23,10 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 
 class MyModel(sly.nn.inference.InstanceSegmentation):
-    def __init__(
+    def load_on_device(
         self,
-        model_dir: str = None,
         device: Literal["cpu", "cuda", "cuda:0", "cuda:1", "cuda:2", "cuda:3"] = "cpu",
     ):
-        super().__init__(model_dir, device)
-        return
         ####### CODE FOR DETECTRON2 MODEL STARTS #######
         with open(os.path.join(model_dir, "model_info.json"), "r") as myfile:
             model_info = json.loads(myfile.read())
@@ -46,7 +43,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
             "thing_classes"
         )
         ####### CODE FOR DETECTRON2 MODEL ENDS #########
-        print("Model has been successfully loaded on device")
+        print(f"✅ Model has been successfully loaded on {device} device")
 
     def get_classes(self) -> list[str]:
         return self.class_names  # ["cat", "dog", ...]
@@ -54,7 +51,6 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
     def predict(
         self, image_path: str, confidence_threshold: float = 0.8
     ) -> list[sly.nn.PredictionMask]:
-        return []
         image = cv2.imread(image_path)  # BGR
 
         ####### CODE FOR DETECTRON2 MODEL STARTS #######
@@ -76,21 +72,7 @@ team_id = int(os.environ["context.teamId"])
 model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = os.environ.get("modal.state.device", "cpu")  # @TODO: reimplement
 
-m = MyModel(model_dir, device)
-
-text1 = sly.app.widgets.Text("text text text", "success")
-
-cards: List[sly.app.widgets.Card] = []
-for i in range(30):
-    cards.append(sly.app.widgets.Card(title="My title1", description="My description"))
-
-
-# main_pane = sly.app.widgets.Container(widgets=cards, direction="horizontal", gap=10)
-main_pane = sly.app.widgets.Container(widgets=cards, direction="vertical", gap=10)
-sidebar = sly.app.widgets.Sidebar(left_pane=text1, right_pane=main_pane)
-
-# @TODO: MenuSidebar with navigation pane
-
+m = MyModel(model_dir)
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
@@ -98,6 +80,7 @@ if sly.is_production():
     m.serve()
 else:
     # for local development and debugging
+    m.load_on_device("cpu")
     image_path = "./demo_data/image_01.jpg"
     confidence_threshold = 0.7
     results = m.predict(image_path, confidence_threshold)
