@@ -74,6 +74,25 @@ device = os.environ.get("modal.state.device", "cpu")  # @TODO: reimplement
 
 m = MyModel(model_dir)
 
+# @TODO:
+# CPU / GPU usage
+# STDOUT to file -> send to logs widget
+# https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
+# https://stackoverflow.com/questions/41080330/how-can-i-parse-the-nvidia-smi-output-using-in-bash-and-use-the-parsed-result-as
+# v-if condition between widgets
+
+l = sly.app.widgets.Text(text="left part", status="success")
+# r = sly.app.widgets.Text(text="right part", status="error")
+items = [
+    sly.app.widgets.Select.Item(value="option1"),
+    sly.app.widgets.Select.Item(value="option2"),
+    sly.app.widgets.Select.Item(value="option3"),
+]
+
+r = sly.app.widgets.Select(items=items, filterable=True, placeholder="select me")
+sidebar = sly.app.widgets.Sidebar(left_pane=l, right_pane=r)
+
+
 if sly.is_production():
     # code below is running on Supervisely platform in production
     # just ignore it during development and testing
