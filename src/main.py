@@ -82,15 +82,18 @@ m = MyModel(model_dir)
 # v-if condition between widgets
 
 l = sly.app.widgets.Text(text="left part", status="success")
-# r = sly.app.widgets.Text(text="right part", status="error")
 items = [
-    sly.app.widgets.Select.Item(value="option1"),
-    sly.app.widgets.Select.Item(value="option2"),
+    sly.app.widgets.Select.Item(label="CPU", value="cpu"),
+    sly.app.widgets.Select.Item(label="GPU 0", value="cuda:0"),
     sly.app.widgets.Select.Item(value="option3"),
 ]
-
 r = sly.app.widgets.Select(items=items, filterable=True, placeholder="select me")
-sidebar = sly.app.widgets.Sidebar(left_pane=l, right_pane=r)
+
+item = sly.app.widgets.MenuItem(
+    index="1", icon="zmdi-audio", name="my-menu-item-1", content=r
+)
+
+sidebar = sly.app.widgets.Sidebar(left_pane=l, right_pane=item)
 
 
 if sly.is_production():
