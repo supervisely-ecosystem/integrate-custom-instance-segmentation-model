@@ -89,11 +89,22 @@ items = [
 ]
 r = sly.app.widgets.Select(items=items, filterable=True, placeholder="select me")
 
-item = sly.app.widgets.MenuItem(
-    index="1", icon="zmdi-audio", name="my-menu-item-1", content=r
-)
+# sidebar = sly.app.widgets.Sidebar(left_pane=l, right_pane=item)
 
-sidebar = sly.app.widgets.Sidebar(left_pane=l, right_pane=item)
+# @TODO: use jinja to render menu (not v-for)
+g1_items = [
+    sly.app.widgets.Menu.Item(
+        title="m1",
+    ),
+    sly.app.widgets.Menu.Item(title="m2"),
+]
+g2_items = [
+    sly.app.widgets.Menu.Item(title="m3"),
+    sly.app.widgets.Menu.Item(title="m4"),
+]
+g1 = sly.app.widgets.Menu.Group("g1", g1_items)
+g2 = sly.app.widgets.Menu.Group("g2", g2_items)
+menu = sly.app.widgets.Menu(groups=[g1, g2])
 
 
 if sly.is_production():
