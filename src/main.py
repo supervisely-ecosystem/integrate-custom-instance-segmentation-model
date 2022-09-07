@@ -81,31 +81,6 @@ m = MyModel(model_dir)
 # https://stackoverflow.com/questions/41080330/how-can-i-parse-the-nvidia-smi-output-using-in-bash-and-use-the-parsed-result-as
 # v-if condition between widgets
 
-l = sly.app.widgets.Text(text="left part", status="success")
-items = [
-    sly.app.widgets.Select.Item(label="CPU", value="cpu"),
-    sly.app.widgets.Select.Item(label="GPU 0", value="cuda:0"),
-    sly.app.widgets.Select.Item(value="option3"),
-]
-r = sly.app.widgets.Select(items=items, filterable=True, placeholder="select me")
-
-# sidebar = sly.app.widgets.Sidebar(left_pane=l, right_pane=item)
-
-# @TODO: use jinja to render menu (not v-for)
-g1_items = [
-    sly.app.widgets.Menu.Item(
-        title="m1",
-    ),
-    sly.app.widgets.Menu.Item(title="m2"),
-]
-g2_items = [
-    sly.app.widgets.Menu.Item(title="m3"),
-    sly.app.widgets.Menu.Item(title="m4"),
-]
-g1 = sly.app.widgets.Menu.Group("g1", g1_items)
-g2 = sly.app.widgets.Menu.Group("g2", g2_items)
-menu = sly.app.widgets.Menu(groups=[g1, g2])
-
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
