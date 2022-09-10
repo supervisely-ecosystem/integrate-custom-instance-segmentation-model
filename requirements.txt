@@ -1,5 +1,6 @@
-supervisely==6.59.1
+supervisely==6.61.3
 black # for code formatting
 torch 
 torchvision 
 torchaudio
+beautifulsoup4
