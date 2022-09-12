@@ -1,6 +1,6 @@
 from distutils.log import warn
 import os
-from typing import Literal, List
+from typing import List
 import cv2
 import json
 from dotenv import load_dotenv
