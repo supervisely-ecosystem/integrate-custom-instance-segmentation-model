@@ -39,10 +39,9 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         cfg.MODEL.WEIGHTS = os.path.join(model_dir, "model_weights.pkl")
 
         self.predictor = DefaultPredictor(cfg)
-        self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get(
-            "thing_classes"
-        )
+        self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get("thing_classes")
         ####### CODE FOR DETECTRON2 MODEL ENDS #########
+
         print(f"✅ Model has been successfully loaded on {device} device")
 
     def get_classes(self) -> list[str]:
