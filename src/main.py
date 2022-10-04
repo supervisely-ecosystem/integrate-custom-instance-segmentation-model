@@ -1,4 +1,3 @@
-from distutils.log import warn
 import os
 from typing import List
 import cv2
@@ -11,8 +10,6 @@ from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2.data import MetadataCatalog
-
-from supervisely.app.widgets import card
 
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
@@ -44,12 +41,12 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
 
         print(f"✅ Model has been successfully loaded on {device} device")
 
-    def get_classes(self) -> list[str]:
+    def get_classes(self) -> List[str]:
         return self.class_names  # ["cat", "dog", ...]
 
     def predict(
         self, image_path: str, confidence_threshold: float = 0.8
-    ) -> list[sly.nn.PredictionMask]:
+    ) -> List[sly.nn.PredictionMask]:
         image = cv2.imread(image_path)  # BGR
 
         ####### CODE FOR DETECTRON2 MODEL STARTS #######
