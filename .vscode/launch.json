@@ -14,6 +14,20 @@
                 "LOG_LEVEL": "DEBUG",
             }
         },
+        {
+            "name": "Basic mode for Supervisely Team",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/main.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",
+                "LOG_LEVEL": "DEBUG",
+                "ENV": "production",
+                "SLY_APP_DATA_DIR": "${workspaceFolder}/results"
+            }
+        },
         // {
         //     "name": "Advanced mode for Supervisely Team",
         //     "type": "python",

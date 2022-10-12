@@ -26,7 +26,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         device: Literal["cpu", "cuda", "cuda:0", "cuda:1", "cuda:2", "cuda:3"] = "cpu",
     ):
         ####### CODE FOR DETECTRON2 MODEL STARTS #######
-        with open(os.path.join(model_dir, "model_info.json"), "r") as myfile:
+        with open(os.path.join(self.model_dir, "model_info.json"), "r") as myfile:
             model_info = json.loads(myfile.read())
         cfg = get_cfg()
         cfg.merge_from_file(
@@ -34,7 +34,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
             model_zoo.get_config_file(model_info["architecture"])
         )
         cfg.MODEL.DEVICE = device  # learn more in torch.device
-        cfg.MODEL.WEIGHTS = os.path.join(model_dir, "model_weights.pkl")
+        cfg.MODEL.WEIGHTS = os.path.join(self.model_dir, "model_weights.pkl")
 
         self.predictor = DefaultPredictor(cfg)
         self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get("thing_classes")
@@ -66,8 +66,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         return results
 
 
-team_id = sly.env.team_id()
-model_dir = os.path.abspath(os.environ["context.slyFolder"])
+model_dir = sly.env.folder()
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using device:", device)
 
