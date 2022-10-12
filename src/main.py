@@ -71,15 +71,6 @@ model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using device:", device)
 
-
-import distinctipy
-
-colors = distinctipy.get_colors(len(self.get_classes()))
-classes = []
-for name, color in zip(self.get_classes(), colors):
-    rgb = distinctipy.get_rgb256(color)
-
-
 m = MyModel(model_dir)
 
 if sly.is_production():
