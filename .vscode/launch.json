@@ -14,29 +14,29 @@
                 "LOG_LEVEL": "DEBUG",
             }
         },
-        {
-            "name": "Advanced mode for Supervisely Team",
-            "type": "python",
-            "request": "launch",
-            "module": "uvicorn",
-            "args": [
-                "src.main:m.app",
-                "--host",
-                "0.0.0.0",
-                "--port",
-                "8000",
-                "--ws",
-                "websockets"
-            ],
-            "jinja": true,
-            // "justMyCode": true,
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",
-                "LOG_LEVEL": "DEBUG",
-                "ENV": "production",
-                // "DEBUG_WITH_SLY_NET": "1",
-                "SLY_APP_DATA_DIR": "${workspaceFolder}/results"
-            }
-        }
+        // {
+        //     "name": "Advanced mode for Supervisely Team",
+        //     "type": "python",
+        //     "request": "launch",
+        //     "module": "uvicorn",
+        //     "args": [
+        //         "src.main:m.app",
+        //         "--host",
+        //         "0.0.0.0",
+        //         "--port",
+        //         "8000",
+        //         "--ws",
+        //         "websockets"
+        //     ],
+        //     "jinja": true,
+        //     // "justMyCode": true,
+        //     "env": {
+        //         "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",
+        //         "LOG_LEVEL": "DEBUG",
+        //         // "ENV": "production",
+        //         // "DEBUG_WITH_SLY_NET": "1",
+        //         "SLY_APP_DATA_DIR": "${workspaceFolder}/results"
+        //     }
+        // }
     ]
 }

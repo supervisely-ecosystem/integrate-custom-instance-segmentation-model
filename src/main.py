@@ -3,6 +3,7 @@ from typing import List
 import cv2
 import json
 from dotenv import load_dotenv
+import torch
 import supervisely as sly
 from typing_extensions import Literal
 
@@ -42,23 +43,24 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         print(f"✅ Model has been successfully loaded on {device} device")
 
     def get_classes(self) -> List[str]:
-        return self.class_names  # ["cat", "dog", ...]
+        return self.class_names  # e.g. ["cat", "dog", ...]
 
     def predict(
         self, image_path: str, confidence_threshold: float = 0.8
     ) -> List[sly.nn.PredictionMask]:
         image = cv2.imread(image_path)  # BGR
 
-        ####### CODE FOR DETECTRON2 MODEL STARTS #######
+        ####### CUSTOM CODE FOR MY MODEL STARTS (e.g. DETECTRON2) #######
         outputs = self.predictor(image)  # get predictions from Detectron2 model
         pred_classes = outputs["instances"].pred_classes.detach().numpy()
         pred_class_names = [self.class_names[pred_class] for pred_class in pred_classes]
         pred_scores = outputs["instances"].scores.detach().numpy().tolist()
         pred_masks = outputs["instances"].pred_masks.detach().numpy()
-        ####### CODE FOR DETECTRON2 MODEL ENDS #########
+        ####### CUSTOM CODE FOR MY MODEL ENDS (e.g. DETECTRON2)  ########
 
         results = []
         for score, class_name, mask in zip(pred_scores, pred_class_names, pred_masks):
+            # filter predictions by confidence
             if score >= confidence_threshold:
                 results.append(sly.nn.PredictionMask(class_name, mask, score))
         return results
@@ -66,17 +68,27 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
 
 team_id = sly.env.team_id()
 model_dir = os.path.abspath(os.environ["context.slyFolder"])
-device = os.environ.get("modal.state.device", "cpu")  # @TODO: reimplement
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print("Using device:", device)
+
+
+import distinctipy
+
+colors = distinctipy.get_colors(len(self.get_classes()))
+classes = []
+for name, color in zip(self.get_classes(), colors):
+    rgb = distinctipy.get_rgb256(color)
+
 
 m = MyModel(model_dir)
 
 if sly.is_production():
-    # code below is running on Supervisely platform in production
+    # this code block is running on Supervisely platform in production
     # just ignore it during development and testing
     m.serve()
 else:
     # for local development and debugging
-    m.load_on_device("cpu")
+    m.load_on_device(device)
     image_path = "./demo_data/image_01.jpg"
     confidence_threshold = 0.7
     results = m.predict(image_path, confidence_threshold)
