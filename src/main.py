@@ -64,19 +64,11 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         return results
 
 
-team_id = int(os.environ["context.teamId"])
+team_id = sly.env.team_id()
 model_dir = os.path.abspath(os.environ["context.slyFolder"])
 device = os.environ.get("modal.state.device", "cpu")  # @TODO: reimplement
 
 m = MyModel(model_dir)
-
-# @TODO:
-# CPU / GPU usage
-# STDOUT to file -> send to logs widget
-# https://stackoverflow.com/questions/938733/total-memory-used-by-python-process
-# https://stackoverflow.com/questions/41080330/how-can-i-parse-the-nvidia-smi-output-using-in-bash-and-use-the-parsed-result-as
-# v-if condition between widgets
-
 
 if sly.is_production():
     # code below is running on Supervisely platform in production
@@ -90,4 +82,4 @@ else:
     results = m.predict(image_path, confidence_threshold)
     vis_path = "./demo_data/image_01_prediction.jpg"
     m.visualize(results, image_path, vis_path)
-    print("predictions and visualization have been created")
+    print(f"predictions and visualization have been saved: {vis_path}")
