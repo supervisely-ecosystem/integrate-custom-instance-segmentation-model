@@ -18,7 +18,17 @@
             "name": "Internal debug for Supervisely Team",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/src/main.py",
+            // "program": "${workspaceFolder}/src/main.py",
+            "module": "uvicorn",
+            "args": [
+                "src.main:m.app",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000",
+                "--ws",
+                "websockets"
+            ],
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
@@ -26,8 +36,8 @@
                 "LOG_LEVEL": "DEBUG",
                 "ENV": "production",
                 "SLY_APP_DATA_DIR": "${workspaceFolder}/results",
-                "TEAM_ID": "7",
-                "FOLDER": "/my_folder/my_model2"
+                "TEAM_ID": "1",
+                "FOLDER": "/temp/inst-seg-model"
             }
         },
         // {

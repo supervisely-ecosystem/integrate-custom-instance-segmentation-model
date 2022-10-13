@@ -1,11 +1,11 @@
 import os
+from typing_extensions import Literal
 from typing import List
 import cv2
 import json
 from dotenv import load_dotenv
 import torch
 import supervisely as sly
-from typing_extensions import Literal
 
 from detectron2 import model_zoo
 from detectron2.engine import DefaultPredictor
@@ -40,7 +40,7 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
         self.class_names = MetadataCatalog.get(cfg.DATASETS.TRAIN[0]).get("thing_classes")
         ####### CODE FOR DETECTRON2 MODEL ENDS #########
 
-        print(f"✅ Model has been successfully loaded on {device} device")
+        print(f"✅ Model has been successfully loaded on {device.upper()} device")
 
     def get_classes(self) -> List[str]:
         return self.class_names  # e.g. ["cat", "dog", ...]
@@ -72,12 +72,12 @@ print("Model directory:", model_dir)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using device:", device)
 
-m = MyModel(model_dir, device)
+m = MyModel(model_dir)
 m.load_on_device(device)
 
 if sly.is_production():
     # this code block is running on Supervisely platform in production
-    # just ignore it during development and testing
+    # just ignore it during development
     m.serve()
 else:
     # for local development and debugging
