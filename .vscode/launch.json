@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Basic debug",
+            "name": "Debug",
             "type": "python",
             "request": "launch",
             // "program": "${file}",
@@ -15,7 +15,7 @@
             }
         },
         {
-            "name": "Basic mode for Supervisely Team",
+            "name": "Internal debug for Supervisely Team",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/src/main.py",
@@ -25,7 +25,9 @@
                 "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}",
                 "LOG_LEVEL": "DEBUG",
                 "ENV": "production",
-                "SLY_APP_DATA_DIR": "${workspaceFolder}/results"
+                "SLY_APP_DATA_DIR": "${workspaceFolder}/results",
+                "TEAM_ID": "7",
+                "FOLDER": "/my_folder/my_model2"
             }
         },
         // {

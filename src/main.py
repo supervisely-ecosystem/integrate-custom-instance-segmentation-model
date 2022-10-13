@@ -67,10 +67,13 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
 
 
 model_dir = sly.env.folder()
+print("Model directory:", model_dir)
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using device:", device)
 
-m = MyModel(model_dir)
+m = MyModel(model_dir, device)
+m.load_on_device(device)
 
 if sly.is_production():
     # this code block is running on Supervisely platform in production
@@ -78,7 +81,6 @@ if sly.is_production():
     m.serve()
 else:
     # for local development and debugging
-    m.load_on_device(device)
     image_path = "./demo_data/image_01.jpg"
     confidence_threshold = 0.7
     results = m.predict(image_path, confidence_threshold)
