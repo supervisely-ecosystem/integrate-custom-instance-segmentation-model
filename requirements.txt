@@ -1,6 +1,4 @@
-supervisely==6.66.1
-black # for code formatting
+supervisely
 torch 
 torchvision 
 torchaudio
-beautifulsoup4
