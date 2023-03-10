@@ -14,7 +14,7 @@
             }
         },
         {
-            "name": "Debug in Supervisely platform",
+            "name": "Advanced Debug in Supervisely platform",
             "type": "python",
             "request": "launch",
             "module": "uvicorn",
@@ -34,7 +34,7 @@
                 "LOG_LEVEL": "DEBUG",
                 "ENV": "production",
                 "DEBUG_WITH_SLY_NET": "1",
-                // "SLY_APP_DATA_DIR": "${workspaceFolder}"
+                "SLY_APP_DATA_DIR": "${workspaceFolder}/app_data"
             }
         }
     ]
