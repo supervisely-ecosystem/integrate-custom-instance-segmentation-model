@@ -53,10 +53,10 @@ class MyModel(sly.nn.inference.InstanceSegmentation):
 
         ####### CUSTOM CODE FOR MY MODEL STARTS (e.g. DETECTRON2) #######
         outputs = self.predictor(image)  # get predictions from Detectron2 model
-        pred_classes = outputs["instances"].pred_classes.detach().numpy()
+        pred_classes = outputs["instances"].pred_classes.detach().cpu().numpy()
         pred_class_names = [self.class_names[pred_class] for pred_class in pred_classes]
-        pred_scores = outputs["instances"].scores.detach().numpy().tolist()
-        pred_masks = outputs["instances"].pred_masks.detach().numpy()
+        pred_scores = outputs["instances"].scores.detach().cpu().numpy().tolist()
+        pred_masks = outputs["instances"].pred_masks.detach().cpu().numpy()
         ####### CUSTOM CODE FOR MY MODEL ENDS (e.g. DETECTRON2)  ########
 
         results = []
