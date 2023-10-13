@@ -1,5 +1,5 @@
 --extra-index-url https://download.pytorch.org/whl/cu113
-supervisely==6.69.70
+supervisely==6.72.137
 torch==1.12.1+cu113
 torchvision==0.13.1+cu113
 ffmpeg-python==0.2.0
